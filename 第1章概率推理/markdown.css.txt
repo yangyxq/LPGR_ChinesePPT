@@ -1,18 +1,19 @@
 body, td {
    font-family: sans-serif;
+   font-style: normal;
    background-color: white;
-   font-size: 40px;
+   font-size: 20px;
 }
 
 p {
-   font-size:24px;
+   font-size:20px;
 }
 
 body {
   max-width: 900px;
   margin: auto;
   padding: 1em;
-  line-height: 20px;
+  line-height: 15px;
 }
 
 tt, code, pre {
@@ -20,27 +21,27 @@ tt, code, pre {
 }
 
 h1 {
-   font-size:30px;
+   font-size:20px;
 }
 
 h2 {
-   font-size:28px;
+   font-size:20px;
 }
 
 h3 {
-   font-size:27px;
+   font-size:20px;
 }
 
 h4 {
-   font-size:26px;
+   font-size:18px;
 }
 
 h5 {
-   font-size:25px;
+   font-size:18px;
 }
 
 h6 {
-   font-size:24px;
+   font-size:18px;
 }
 
 a:visited {
@@ -58,7 +59,7 @@ pre code {
 }
 
 code {
-  font-size: 92%;
+  font-size: 75%;
   border: 1px solid #ccc;
 }
 
@@ -66,8 +67,25 @@ code[class] {
   background-color: #F8F8F8;
 }
 
-table, td, th {
-  border: none;
+table{
+  margin: 1 auto;
+}
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
 }
 
 blockquote {
@@ -78,8 +96,8 @@ blockquote {
 }
 
 hr {
-   height: 0px;
-   border-bottom: none;
+   height: 0.5px;
+   border-bottom: solid;
    border-top-width: thin;
    border-top-style: dotted;
    border-top-color: #999999;
@@ -121,11 +139,11 @@ hr {
    }
 
    @page :left {
-      margin: 15mm 20mm 15mm 10mm;
+      margin: 10mm 15mm 10mm 5mm;
    }
 
    @page :right {
-      margin: 15mm 10mm 15mm 20mm;
+      margin: 10mm 5mm 10mm 15mm;
    }
 
    p, h2, h3 {
