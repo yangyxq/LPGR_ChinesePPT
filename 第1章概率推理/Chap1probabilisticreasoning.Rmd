@@ -105,7 +105,7 @@ output:
 
 - 此框架为PGMs，旨在区分模型设计任务和算法实现任务。因为它基于概率论和图论，拥有坚实的数学基础，而且它是许多标准和经典模型的数学泛化，并允许复用、混合和修改这些模型
 
-# 1.1 统计机器学习（续）
+# 1.1 统计机器学习（续1）
 
 - 数学、统计学、计算机基础等，统计学习，机器学习，数据挖掘，数据科学与人工智能的关系
 
@@ -168,7 +168,7 @@ output:
   
   * __概率__：把每一个事件映射到一个实数 $P(E)$，满足3个公理：非负 $P(E)\ge0$、归一 $P(\Omega)=1$、独立 $P(\bigcup_{i=1}^{\infty}E_i)=\Sigma_{i=1}^{\infty}P(E_i)$
   
-# 1.2 使用概率表示不确定性（续3）
+# 1.2 使用概率表示不确定性（续3_1）
 ## 1.2.3 概率计算和随机变量
   
 - 随机变量和概率计算
@@ -199,7 +199,7 @@ output:
       ----    | ----  | ----  | ----  | ----
       $P(X=x)$| $1/8$ | $3/8$ | $3/8$ | $1/8$
 
-# 1.2 使用概率表示不确定性（续3）
+# 1.2 使用概率表示不确定性（续3_2）
 ## 1.2.3 概率计算和随机变量
 
 - 随机变量和概率计算
@@ -303,8 +303,8 @@ output:
   
   * 如果使用概率的频率派解释，则可询问机器供应商，得到生产正常的机器的频率信息
 
-# 1.2 使用概率表示不确定性（续7）
-## 1.2.7 贝叶斯规则的第一个例子（续）
+# 1.2 使用概率表示不确定性（续7_1）
+## 1.2.7 贝叶斯规则的第一个例子
 
 - 确定第二个变量 $L=\left\{good, bad\right\}$，表示机器生产的灯泡状态
   
@@ -331,17 +331,17 @@ output:
     + 表明机器只有 $2.4\%$的概率正常工作，即在没有做出有关机器正常的任何强假设下，生产出一个坏灯泡就可看出机器问题的迹象
 
 # 1.2 使用概率表示不确定性（续8）
-## 1.2.8 贝叶斯规则的第一个 $R$语言例子
+## 1.2.8 贝叶斯规则的第一个R语言例子
 
 - 如果观察到多个坏灯泡，则需要怎么办？只看到一个坏灯泡就说机器出现故障需要维修，这似乎有些不合情理
 
-- 贝叶斯派的做法是使用**后验概率**作为新的**先验概率**，并依次（按顺序）更新后验分布，编写如下 $R$语言程序的贝叶斯函数
+- 贝叶斯派的做法是使用**后验概率**作为新的**先验概率**，并依次（按顺序）更新后验分布，编写如下R语言程序的贝叶斯函数
 
 - 给定三个参数：先验分布($prior$)、似然率($likelihood$)和观察到的数据序列($data$)
 
-- 下面的 $R$代码是一个可计算给定**先验分布**、**似然率**和**观察数据序列**后的**后验概率**的函数
+- 下面的R代码是一个可计算给定**先验分布**、**似然率**和**观察数据序列**后的**后验概率**的函数
 
-    ```{r the first Bayesmodel, echo=TRUE, tidy=TRUE, comment=""}
+    ```{r the first Bayesmodel, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
     prior <- c(working = 0.99, broken = 0.01)
     likelihood <- rbind(
       working = c(good = 0.99, bad = 0.01),
@@ -351,25 +351,23 @@ output:
     ```
     
 - 即以上代码定义了 $3$个变量，包含机器工作状态变量 $M$的先验分布($prior$)，刻画机器每个状态下灯泡状态变量 $L$的似然率($likelihood$)，即有4个值
-
-- 
-    ```{r likelihood1, echo=TRUE, tidy=TRUE, comment=""}
+    ```{r likelihood1, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
     likelihood
     ```
 
 - 计算观察到一个灯泡是坏的情况下的**后验概率** $P(M|L)$
 
-    ```{r likelihood2, echo=TRUE, tidy=TRUE, comment=""}
+    ```{r likelihood2, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
     posterior <- prior*likelihood[, data[1]]/sum(prior*likelihood[, data[1]])
     posterior
     ```
    
-# 1.2 使用概率表示不确定性（续8）
-## 1.2.8 贝叶斯规则的第一个 $R$语言例子（续）
+# 1.2 使用概率表示不确定性（续8_1）
+## 1.2.8 贝叶斯规则的第一个R语言例子（续）
 
 - 由于变量 $data$包含了观察到的、用于测试机器和计算后验概率的灯泡状态序列，故定义如下贝叶斯更新函数：
 
-    ```{r bayesfunction, echo=TRUE, tidy=TRUE, comment=""}
+    ```{r bayesfunction, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
     bayes <- function(prior, likelihood, data)
     {
     	posterior <- matrix(0, nrow=length(data), ncol=length(prior))
@@ -391,24 +389,271 @@ output:
     
   * 创建一个矩阵，存储后验分布连续计算的结果
   
-  * 对于每个数据，给定当前先验概率计算后验概率：贝叶斯公式的 $R$代码
+  * 对于每个数据，给定当前先验概率计算后验概率：贝叶斯公式的R代码
   
   * 新的先验概率就是当前的后验概率，且不断迭代同样的过程
   
 - 函数返回一个矩阵，包含初始先验概率和所有后续计算的后验概率：
 
-    ```{r bayesexample, echo=TRUE, tidy=TRUE, comment=""}
+    ```{r bayesexample, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
     bayesexample <- bayes(prior, likelihood, data)
     bayesexample##矩阵或数组
     ```
 
-# 1.2 使用概率表示不确定性（续8）
-## 1.2.8 贝叶斯规则的第一个 $R$语言例子（续）
+# 1.2 使用概率表示不确定性（续8_2）
+## 1.2.8 贝叶斯规则的第一个R语言例子（续）
 
-- 使用 $R$函数绘制两个后验分布的演化过程：一个是机器正常（绿色线）的后验概率；一个是机器故障（红色线）的后验概率
+- 使用R函数绘制两个后验分布的演化过程：一个是机器正常工作的后验概率；一个是机器出现故障的后验概率
 
-    ```{r bayesplot, echo=TRUE, tidy=TRUE, comment=""}
-    matplot(bayesexample, type = 'b', lty =c(1, 2), lwd = 2, pch =16, col =c(3, 2), xlab = "观察数据序列", ylab = "后验概率")
+    ```{r bayesplot, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    matplot(bayesexample, type = 'b', lty =c(1, 2), lwd = 2, pch =c(15, 16), col =c(2, 3), xlab = "观察数据序列", ylab = "后验概率")
+    legend(3.5, 0.6, c("正常工作概率", "出现故障概率"), col = c(2, 3),
+       text.col = "green4", lty = c(1, 2), pch =c(15, 16), merge = TRUE, bg = "gray90")
     ```
+    
+    * 随着坏灯泡的增多，机器正常工作的概率快速下降（实线和绿色线）；机器出现故障的概率快速上升（虚线和红色线）
+    
+    * 原本假设 $100$只灯泡中只有 $1$个坏灯泡（即不要有太多坏灯泡），机器正常工作的概率还挺高（$71\%$），但随着观察到越来越多的坏灯泡，则不断更新了机器正常工作的后验概率，故这个机器现在需要维修了
+    
+# 1.2 使用概率表示不确定性（续8_3）
+## 1.2.8 贝叶斯规则的第一个R语言例子（续）
+
+- 不同的**先验概率** $P(M)$，会有不同的变化过程；假设没有关于机器是否正常工作的信息，即认为两种情况具有相同的概率：
+
+    ```{r bayesplot1, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    prior1 <- c(working = 0.50, broken = 0.50)
+    bayesexample1 <- bayes(prior1, likelihood, data)
+    matplot(bayesexample1, type = 'b', lty =c(1, 2), lwd = 2, pch =c(15, 16), col =c(2, 3), xlab = "观察数据序列", ylab = "后验概率")
+    legend(3.5, 0.6, c("正常工作概率", "出现故障概率"), col = c(2, 3),
+       text.col = "green4", lty = c(1, 2), pch =c(15, 16), merge = TRUE, bg = "gray90")
+    ```
+    
+    * 得到了一个快速收敛的曲线，其中机器出现故障的概率很高，对观察到的一批坏灯泡来说，并不意外
+    
+# 1.2 使用概率表示不确定性（续8_4）
+## 1.2.8 贝叶斯规则的第一个R语言例子（续）
+
+- 若还是假定机器正常工作的概率为 $99\%$，但如果变换观察到的灯泡数据：
+
+    ```{r bayesplot2, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    prior <- c(working = 0.99, broken = 0.01)
+    data2 <- c("bad", "good", "good", "good", "good", "good", "good", "good", "good", "good")
+    bayesexample2 <- bayes(prior, likelihood, data2)
+    matplot(bayesexample2, type = 'b', lty =c(1, 2), lwd = 2, pch =c(15, 16), col =c(2, 3), xlab = "观察数据序列", ylab = "后验概率")
+    legend(8, 0.6, c("正常工作概率", "出现故障概率"), col = c(2, 3),
+       text.col = "green4", lty = c(1, 2), pch =c(15, 16), merge = TRUE, bg = "gray90")
+    ```
+    
+    * 贝叶斯算法在观察到的第一个坏灯泡时有点犹豫，即机器正常工作的概率下降，但后来它又收敛到很高的概率
+    
+# 1.3 概率图模型
+
+- 接下来介绍如何创建带有多于两个随机变量真实世界的模型，以及如何解决两个重要问题：
+
+  * __推断问题__：观察到新数据时计算后验概率的问题
+  
+  * __学习问题__：数据集中先验概率的确定问题
+  
+- 上一节介绍的简单贝叶斯算法可以解决推断问题，但只考虑了两个离散随机变量，过于简单而无法捕捉真实世界的复杂性
+
+- 概率图模型作为一种通用框架从简单的结构模块生成并使用复杂的概率模型；**复杂**是指为了表示和解决拥有大量变量（构成结构模块的变量）或数据的任务，而复杂的模型可分解成几个相互交互的简单结构，最简单的结构就是一个随机变量
+
+# 1.3 概率图模型（续1）
+## 1.3.1 概率模型
+
+- 当考虑多个随机变量时，通过联合概率分布可表示复杂变量结构，但如果变量是几百、几千甚至更多的，表示这么庞大的分布是很难的
+
+- 例如，医学诊断中，每个变量表示一个症状，其他变量可表示病人的年龄、性别、体温、血压等，或者最近的天气条件和饮食状况
+
+- 从此复杂的系统或模型结构中，需解决两个问题：
+
+  * 从病人的数据库中，评估和发现所有的概率分布以及相关参数（学习问题）
+  
+  * 把问题放入模型中，例如，如果观察到了一系列症状，问病人是否还健康？又如，如果改变病人的饮食，并开了这个药，问病人是否会恢复？（推断问题）
+  
+- 有一点很重要：在概率图模型中，可利用其它重要的结构知识即不同随机变量之间的依赖关系（或条件独立性）；例如，症状和疾病之间有明显的依赖关系；又如，饮食和症状之间的依赖关系不太明显，或者通过其它变量比如年龄、性别有所依赖（条件独立）
+  
+- 概率图模型中的推理具有概率性质，对任意变量的观察可推出其它变量的后验分布，得到它们的概率具有比二元响应更丰富的回答
+
+# 1.3 概率图模型（续2）
+## 1.3.2 图和条件独立
+
+- 假设有 $2$个二元随机变量 $X$和 $Y$，其联合概率分布为 $P(X,Y)$，两个变量分别取值为 $x_1$、$x_2$和 $y_1$、$y_2$
+
+- 分别对应于 $2^2=4$个概率值，即 $P(x_1, y_1)$、$P(x_1, y_2)$、$P(x_2, y_1)$、$P(x_2, y_2)$
+
+- 假设有 $10$个二元随机变量 $X_1, X_2, \cdots, X_{10}$，则需要提供 $2^{10}=1024$个概率值来确定它们的联合概率分布
+
+- 假设有 $20$个二元随机变量，则需要给定 $2^{20}=1048576$个概率值（呈指数级增长），这个相对简单的模型几乎已无法建模
+
+- 概率图模型正是简洁地描述这类模型的框架，利用条件独立性（结构知识）支持有效的模型构建和使用，即用图表示变量之间的结构知识
+
+# 1.3 概率图模型（续2_1）
+## 1.3.2 图和条件独立
+
+- 例如，医学如何诊断感冒？（此示例做了极大的简化，不代表任何医学建议）
+
+  * $Season (Se)$：年内季节；$Blocked Nose (N)$：鼻子堵塞；$Headache (H)$：病人头痛；$Sneezing (S)$：病人经常打喷嚏；$Cough (C)$：病人咳嗽；$Cold$：病人感冒
+  
+  * 每个症状都可用随机变量来表示不同程度的取值，例如，病人鼻子有点堵塞，则给定 $P(N=blocked)=0.60$和 $P(N=notblocked)=0.40$
+  
+  * 联合概率分布 $P(Se,N,H,S,C,Cold)$一共需要 $4 \times 2^5=128$个概率值（季节 $4$个取值，症状 $2$个取值）
+  
+  * 很难确定推断和学习问题，比如，鼻子不堵塞的概率、病人头痛和打喷嚏等的概率
+  
+  * 但可以确定头痛与咳嗽或鼻子堵塞没有直接关系，除非病人感冒了；而且**季节**对**打喷嚏**、**鼻子堵塞**有非常直接的影响，或者**咳嗽**对于**头痛**有很少或几乎没有影响；在概率图模型中，可用图表示这些依赖关系，见下图$1-4$
+  
+    ![](./图1-4.jpg "图1-4")
+    
+    + 图中节点代表随机变量，节点间箭头代表随机变量之间的依赖关系，由此可简化联合概率分布
+
+# 1.3 概率图模型（续2_2）
+## 1.3.2 图和条件独立
+
+- 使用图作为模型来简化复杂（或甚至混乱）分布的优势：
+
+  * 在真实世界问题的建模中，通常随机变量只与其他随机变量的小规模子集直接交互（六度分隔理论、六度空间理论以及小世界理论等），故使用图可使模型更加紧凑和易于处理
+  
+  * 图中的结构知识和依赖关系易于理解和沟通
+  
+  * 图模型引出了联合概率分布的紧凑表示，并且易于计算
+  
+  * 使用图论和相关算法可实现推断和学习算法：与初始的联合概率分布相比，使用概率图模型会以几个级数的速度加速计算
+  
+# 1.3 概率图模型（续3）
+## 1.3.3 分解分布
+
+- 医学诊断感冒的概率图模型中的结构知识即独立假设，可从数据集中发现这些假设即结构学习，则它们的联合概率分布可分解为因子的乘积：$$P(Se, N, H, S, C, Cold)$$  $$=P(Se)P(S|Se, Cold)P(N|Se, Cold)P(Cold)P(C|Cold)P(H|Cold)$$
+
+- 因子是更加简单的概率分布，比如 $P(C|Cold)$表示病人感冒的情况下咳嗽的概率；此时每个因子（分布）只需要确定少量的参数：$4+2^3+2^3+2+2^2+2^2=30$，远少于 $128$个参数
+
+- 参数很容易通过人工信度或观察数据确定；例如，不知道病人是否感冒，故给定 $P(Cold=true)=P(Cold=false)=0.50$；又如，如果病人得了感冒（$Cold=true$），他很有可能咳嗽；如果 $Cold=false$，病人咳嗽的概率很低，但不会为0，因为可能还有其它导致咳嗽的原因
+
+# 1.3 概率图模型（续4）
+## 1.3.4 有向概率图模型
+
+- 按如下形式分解多个随机变量 $X_1, X_2, \cdots, X_n$上的联合概率分布：$$P(X_1, X_2, \cdots, X_n)=\prod_{i=1}^{n}P(X_i|pa(X_i))$$
+
+  * $pa(X_i)$是图中定义的变量 $X_i$的父节点的子集
+  
+  * 图$1-5$的父节点很容易理解：当箭头 $A$指向 $B$时，$A$就是$B$的父节点，反之亦是
+  
+    ![](./图1-5.jpg "图1-5")
+    
+  * 有向概率图模型很适合构建需要表示因果关系的问题，也适合参数学习即每个局部概率分布很容易学习
+  
+  * 但图必须是无环的，即图$1-5$中不应该有从 $A$到 $B$和从 $B$指向 $A$的箭头
+  
+# 1.3 概率图模型（续5）
+## 1.3.5 无向概率图模型
+
+- 无向概率图模型也称为马尔可夫网络，按如下形式分解多个随机变量 $X_1, X_2, \cdots, X_n$上的联合概率分布：$$P(X_1, X_2, \cdots, X_n)=\frac{1}{Z}\prod_{c=1}^{C}\varphi_c(X_c)$$
+
+  * 左边第一项是通常的联合概率分布
+  
+  * 常数 $Z$是归一化常数，确保右侧所有项的和为1，因为这是一个概率分布
+  
+  * $\varphi_c$是变量子集 $X_c$上的因子，以便这个子集的每个变量组成一个极大团，即内部所有节点都相互连接的子图，如图$1-6$所示
+  
+    ![](./图1-6.jpg "图1-6")
+    
+    + 上图中有 $4$个节点，且 $\varphi_c$定义在子集即极大团 $A,B,C$和$A,D$上，因此此处概率分布也不复杂
+    
+    + 此类概率图模型在计算机视觉、图像处理等遵循一定模式的领域应用广泛
+    
+# 1.3 概率图模型（续6）
+## 1.3.6 实例与应用
+
+- 灯泡机器的概率图模型分解形式如下：$P(L, M)=P(M) \cdot P(L|M)$
+
+- 感冒诊断的概率图模型分解形式如下：$P(Se, N, H, C, Cold)=P(Se)P(S|Se, Cold)P(N|Se, Cold)P(Cold)P(C|Cold)P(H|Cold)$
+
+  ![](./图1-7.jpg "图1-7")      ![](./图1-4.jpg "图1-4")
+  
+- 使用 R Packages **gRain**(需加载程序包**gRbase**)表示概率图模型，实际这个程序包还依赖于许多其他的程序包，而且提供了对图模型的一些基本操作函数
+
+- 先介绍一下R语言的重要工程项目：**Bioconductor**，它是促进当前和新兴的高通量生物组数据（DNA microarray，sequence，flow，SNP和其它数据）的统计分析和理解的工具，主要是基于R语言编写了其中大多数的软件包，致力于开源、协作、分布式软件开发和读写、可重复的研究。
+    ```{r Construct PGMs, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    library(BiocManager)
+    #if (!requireNamespace("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+    #BiocManager::install(version = "3.12")
+    #source("http://bioconductor.org/biocLite.R")##如果R版本<3.5.0，有些特殊的程序包需要调用此函数，比如“GenomicFeatures”和“AnnotationDbi”, BiocInstaller::biocLite(c("GenomicFeatures", "AnnotationDbi"))
+    #biocLite()
+    #install.packages("gRain")
+    library("gRain")
+    ```
+
+# 1.3 概率图模型（续6_1）
+## 1.3.6 实例与应用（续）
+
+- 定义一个无向图（随机变量 $A,B,C,D,E$）：
+    ```{r simple undericted graph, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    graph <- gRbase::ug(~ A:B:E + C:E:D)
+    class(graph)
+    ```
+    
+    * 定义了团 $A, B, E$和团 $C, E, D$的图模型，即蝴蝶状的图
+    
+    * R语言语法：字符串对应的团用“ $+$”分开，每个团中的变量名用冒号“ $:$”分隔
+    
+- 安装图的可视化 R Packages **Rgraphviz**
+    ```{r simple undericted graph1, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment="", fig.width=6, fig.height=4}
+    #install.packages("Rgraphviz")
+    library("Rgraphviz")
+    plot(graph)
+    ```
+    ![](./图1-8.jpg "图1-8")
+    
+# 1.3 概率图模型（续6_2）
+## 1.3.6 实例与应用（续）
+
+- 定义一个有向图（随机变量 $A,B,C,D,E$）：
+    ```{r simple dericted graph, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment="", fig.width=6, fig.height=4}
+    dag <- gRbase::dag(~ A + B:A + C:B + D:B + E:C:D)
+    dag
+    plot(dag)
+    ```
+
+- 图模型可用节点的方式构建，也可用矩阵表示法，即一个图模型可以等价地表示为一个方阵，每一行和每一列表示一个节点，如果节点间存在边，则此矩阵元素（系数）为 $1$，否则为 $0$；如果图是无向的，矩阵对称，否则可以是任何样式
+
+- 回到灯泡机问题定义的概率图模型，并给出数值概率，重新计算一遍看看结果是否一致
+    ```{r bulb PGMs, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    machine_val <- c("working", "broken")
+    light_bulb_val <- c("good", "bad")
+    #为两个随机变量定义概率值或百分比数值
+    machine_prob <- c(99, 1)
+    light_bulb_prob <- c(99, 1, 60, 40)
+    #使用gRain程序包中函数cptable定义随机变量的条件概率表：离散型随机变量概率分布的内存表示（第2章精确推断具体讨论）
+    M <- gRain::cptable(~machine, value = machine_prob, levels = machine_val)
+    L <- gRain::cptable(~light_bulb | machine, values = light_bulb_prob, levels = light_bulb_val)
+    ```
+    
+- 接下来编译上面的灯泡问题概率图模型，采用第2章将介绍的**联结树算法(Junction Tree Algorithm)** 
+    ```{r bulb PGMs1, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    plist <- gRain::compileCPT(list(M,L))
+    plist
+    plist$machine
+    plist$light_bulb
+    ```
+    
+- 利用编译好的PGMs计算后验概率 $P(M|L)$；首先给PGMs输入证据（即观察到一个坏灯泡的数据）
+    ```{r bulb PGMs2, echo=TRUE, tidy=TRUE, warning=FALSE, message=FALSE, comment=""}
+    net <- gRain::grain(plist)#Creating graphical independence network(grain objects)
+    net2 <- gRain::setEvidence(net, evidence = list(light_bulb = "bad"))
+    gRain::querygrain(net2, nodes = c("machine"))
+    ```
+    
+- 这个结果与之前使用贝叶斯方法得到的结果完成相同；因此，可准备创建更加强大的模型，以及针对不同的问题应用不同的算法
+
+# 1.4 小结
+
+- 概率论的基本概念，如何及为何使用概率表示数据和知识的不确定性
+
+- 贝叶斯公式是计算后验概率的最重要的公式，即当新的数据可用时，要更新关于一个事实的信念和知识
+
+- 联合概率分布包含大量变量时变得很复杂且难以处理，基于概率图模型的基础知识，可形成对概率模型进行易于处理、高效和简单建模的通用框架
+
+- 概率图模型的不同类型，学会如何使用 $R$程序包编写第一个贝叶斯推理和概率图模型
 
 
