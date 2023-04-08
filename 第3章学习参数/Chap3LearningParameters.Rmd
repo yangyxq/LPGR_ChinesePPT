@@ -1,26 +1,26 @@
 ---
-title: "概率图模型——R语言  <br />  第2章 精确推断"
+title: "概率图模型——R语言  <br />  第3章 学习参数"
 author: ' **教师：杨 伟**  <br />   **电话：18910162189**  <br />  **email: yangyxq@ruc.edu.cn** '
 date: '**`r Sys.Date()`**'
 output:
-  powerpoint_presentation:
-  beamer_presentation:
-    incremental: yes
   slidy_presentation:
     css: markdown.css.txt
     incremental: yes
+  beamer_presentation:
+    incremental: yes
+  powerpoint_presentation:
   ioslides_presentation:
     incremental: yes
     widescreen: yes
 ---
 
-# 第2章 精确推断
+# 第3章 学习参数
 
-- 通过使用PGMs模型和对变量子集的观察来查询分布的算法，目的是为了发现另一个变量子集上的后验概率
+- 构建概率图模型的3个步骤：定义随机变量（即图中节点）、定义图的结构（或结构学习）、定义每个局部分布（即节点条件概率）的数值参数
 
-- 没有必要观察和查询所有的变量，但研究的所有算法可用在任何被观察的子集或被查询的子集上
+- 人工设定或指定每个局部概率分布的数值有困难，可获取到大量真实数据并使用**参数学习的方法（参数拟合或模型校准）**估计参数取值
 
-- 主要有两种类型的查询
+- 参数学习是机器学习中的重要课题，如何使用数据集为给定的图模型学习参数：完全可观测到的数据；部分可观测到的数据（需要更多先进技术）
 
   * + __概率查询__：观察到随机变量子集$E$，取值为$e$（即一个实例），称之为证据；可计算另一个随机变量子集$Y$的后验概率分布$P(Y|E=e)$
   
